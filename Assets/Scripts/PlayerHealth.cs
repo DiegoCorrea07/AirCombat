@@ -40,6 +40,16 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            
+            Destroy(collision.gameObject); // Destruir la bala tras el impacto
+        }
+    }
+
     private void UpdateHealthBar()
     {
         if (healthBar != null)

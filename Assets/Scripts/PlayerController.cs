@@ -55,16 +55,6 @@ public class PlayerController : MonoBehaviour
         // Limitar la posición del jugador dentro de los límites de la pantalla
         LimitPlayerMovement();
 
-        // Controlar animaciones según el movimiento
-        if (horizontal != 0f || vertical != 0f)
-        {
-            animator.SetBool("IsMoving", true);
-        }
-        else
-        {
-            animator.SetBool("IsMoving", false);
-        }
-
         // Disparo al presionar la barra espaciadora
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -91,5 +81,13 @@ public class PlayerController : MonoBehaviour
 
         // **Rotar la bala hacia la dirección del disparo**
         bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            Destroy(collision.gameObject); // Destruir la bala tras el impacto
+        }
     }
 }

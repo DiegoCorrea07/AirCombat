@@ -4,7 +4,6 @@ public class BulletControllerEnemy : MonoBehaviour
 {
     public float speed = 10f; // Velocidad constante de la bala
     private Rigidbody2D rb; // Referencia al Rigidbody2D
-    //public Animator bulletAnimator; // Referencia al Animator de la bala
     public AudioClip shootSound; // Sonido de disparo
     public AudioClip explosionSound; // Sonido de explosión
     private AudioSource audioSource; // Componente de AudioSource
@@ -31,14 +30,11 @@ public class BulletControllerEnemy : MonoBehaviour
             audioSource.volume = shootVolume; // Establecer el volumen del disparo
             audioSource.PlayOneShot(shootSound); // Reproducir el sonido de disparo
         }
-
-        // El movimiento de la bala será controlado por el Rigidbody2D
-        // Este script no maneja la velocidad directamente, ya que lo puedes manejar desde otro lado (Enemy o Player)
     }
 
     void Update()
     {
-        // Este método ahora está vacío porque el movimiento de la bala ya depende del Rigidbody2D.
+        // El movimiento de la bala ya depende del Rigidbody2D.
     }
 
     private void OnBecameInvisible()
@@ -61,22 +57,21 @@ public class BulletControllerEnemy : MonoBehaviour
                 playerHealth.TakeDamage(10f); // Ajusta el daño aquí
             }
 
-            // Reproducir el sonido de la explosión antes de marcar el impacto
+            // Reproducir el sonido de la explosión antes de destruir la bala
             if (audioSource != null && explosionSound != null)
             {
-                audioSource.volume = explosionVolume; // Establecer el volumen de la explosión
-                audioSource.PlayOneShot(explosionSound); // Reproducir el sonido de explosión
+                audioSource.volume = explosionVolume; // Ajustar el volumen de la explosión
+                audioSource.PlayOneShot(explosionSound); // Reproducir el sonido de la explosión
             }
 
+            // Instanciar el prefab de explosión, si está configurado
             if (explosionPrefab != null)
             {
                 Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             }
 
-            // Destruir la bala después de un pequeño retraso para que la animación y el sonido se reproduzcan
-            Destroy(gameObject, 0.5f); // Destruir la bala después de un retraso para asegurar que el sonido se reproduzca
+            // Destruir la bala **inmediatamente después de reproducir el sonido y la animación**
+            Destroy(gameObject); // La bala se destruye inmediatamente, sin retraso.
         }
     }
-
-
 }
