@@ -10,16 +10,26 @@ public class EnergyDot : MonoBehaviour
         playerProgress = FindObjectOfType<PlayerProgress>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player")) // Verificar si colisiona con el jugador
-        {
-            if (playerProgress != null)
-            {
-                playerProgress.AddEnergy(); // Incrementa la barra de energía
-            }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Player")) // Verificar si colisiona con el jugador
+    //    {
+    //        if (playerProgress != null)
+    //        {
+    //            playerProgress.AddEnergy(); // Incrementa la barra de energía
+    //        }
 
-            Destroy(gameObject); // Elimina el EnergyDot
+    //        Destroy(gameObject); // Elimina el EnergyDot
+    //    }
+    //}
+
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Destroy(gameObject);
         }
     }
 }
+
